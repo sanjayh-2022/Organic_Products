@@ -1,0 +1,61 @@
+<%layout('./layouts/boilerplate')%>
+<body style="overflow-x: hidden;">
+ <div class="row mt-3">
+    <h2 class="col-6 offset-1 mb-4">Sign up on Atmanirbhar Bharath : </h2>
+    <div class="col-6 offset-3">
+        <form action="/signup" method="POST"  class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" name="username" placeholder="enter the username" class="form-control" id="username" required>
+            <div class="valid-feedback">
+                Username is available
+            </div>
+            <div class="invalid-feedback">
+                Username is not available
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" name="email" placeholder="enter the email" class="form-control" id="email" required>
+            <div class="valid-feedback">
+               valid Email
+            </div>
+            <div class="invalid-feedback">
+                invalid Email
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" placeholder="enter password" class="form-control" id="password" required>
+            <div class="valid-feedback">
+               Password is strong
+            </div>
+            <div class="invalid-feedback">
+                Enter a strong password
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="whatsappnumber" class="form-label">Phone number</label>
+            <input type="number" name="whatsappnumber" placeholder="enter phone number" class="form-control" id="whatsappnumber" required>
+            <div class="valid-feedback">
+               Phone number is valid
+            </div>
+            <div class="invalid-feedback">
+                Enter a valid Number
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" name="address" placeholder="enter address" class="form-control" id="address" required>
+            <div class="valid-feedback">
+               Address is valid
+            </div>
+            <div class="invalid-feedback">
+                Enter a valid address
+            </div>
+        </div>
+        <button class="btn btn-success mb-3">SignUp</button>
+        </form>
+    </div>
+</div>
+</body>

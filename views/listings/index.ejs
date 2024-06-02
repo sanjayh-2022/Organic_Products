@@ -1,0 +1,139 @@
+<%layout('./layouts/boilerplate')%>
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<!-- Linking swiper.css -->
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <section class="main py-5">
+   <div class="container py-5">
+    <div class="row py-5">
+      <div class="col-lg-6 py-5">
+        <p class="m-0 thchild1 pt-2">Organic Products</p>
+        <h1 style="font-size: 2rem;">Atmanirbhar Farm</h1>
+        <div class="line my-2"></div>
+        <p class="thchild2">At Atma Nirbhar Farm, we are dedicated to fostering self-reliance in your journey towards holistic well-being.</p>
+        <a href="/aboutus"><button class="mbtn1 mt-3">Read More</button></a>
+        <button class="mbtn2">Shop Now</button>
+      </div>
+    </div>
+   </div>
+  </section>
+  
+  
+  <!-- welcome section -->
+  <section class="welcome text-center">
+    <div class="container">
+      <div class="row py-4 text-white">
+        <div class="col-lg-6 m-auto">
+           <p class="mb-2">Green Agriculrure</p>
+           <h1 style="font-size: 1.5rem;">Welcome to Atma Nirbhar Farm: Cultivating Health, Naturally</h1>
+           <div class="line2 my-3"></div>
+           <p>At Atma Nirbhar Farm, we are dedicated to fostering self-reliance <br> in your journey towards holistic well-being. 
+           </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card py-3">
+            <div class="card-body">
+              <span><i class="bi bi-shop-window"></i></span>
+              <h2>100% Natural a2 Cow Milk Products</h2>
+              <p>
+                
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card py-3">
+            <div class="card-body">
+              <span><i class="bi bi-flower2"></i></span>
+              <h2>Organic Products</h2>
+              <p>
+               
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card py-3">
+            <div class="card-body">
+              <span><i class="bi bi-gift"></i></span>
+              <h2>Delivered fresh from Farm to Home</h2>
+              <p>
+                
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- products -->
+  <section class="product bg-light">
+    <div class="container">
+      <div class="row py-5 text-center">
+        <div class="col-lg-6 m-auto">
+           <h1>Our Best Products</h1>
+           <div class="line my-3"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <%let incrementid= 0 %>
+  <%let currentCategory=null %>
+  <% for(indi of data){ incrementid++ %>
+      <% if(indi.category!=currentCategory){%>
+          <% currentCategory=indi.category %>
+  <div class="row" style="overflow: hidden !important;margin: 0 !important;padding: 0 !important;">
+  <div id="carouselExampleControls<%=indi.order%><%=indi.suborder%>" class="carousel">
+      <p class="display-5 mt-4 mb-2" style="margin-left: 2rem !important;" id="c<%= incrementid %>"><b><%=indi.category%></b></p>
+      <div class="carousel-inner">
+        <% let count = 0; %>
+          <% for(cate of data){%>
+               <% if(count===8){ break;%> <%}%>
+              <% if(cate.category==currentCategory){%>
+          <div class="carousel-item <%= count === 0 ? 'active' : '' %>">
+             <a href="/listings/<%=cate._id%>"><div class="card">
+                <div class="img-wrapper">
+                  <img src="<%= cate.image.path%>" alt="...">
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title head1" style="font-weight: 600;"><%=cate.product%></h5>
+                  <p class="card-text per1" style="margin-bottom: 1px;">Quantity:&nbsp; <%=cate.quantity%></p>
+                  <p class="card-text per1">Price:&nbsp;&#8377; <%=cate.price%></p>
+                  <form action="/listing/addtocart/<%=cate._id %>" method="POST">
+                     <button class="cartbutton"><i class="bi bi-cart-plus editcart"></i></button>
+                  </form>
+                </div>
+              </div>
+            </a>
+            </div>
+            <% count++; %>
+            <%}%>
+          <%}%>      
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+  <%}%>
+   <%}%>
+
+
+
+
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script src="/js/swipe.js"></script>
+
+</body>   

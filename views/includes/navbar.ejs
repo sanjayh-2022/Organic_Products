@@ -1,0 +1,108 @@
+<nav class="navbar navbar-expand-lg pb-3 border-bottom  sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><img src="https://res.cloudinary.com/dzbw89xnj/image/upload/v1714651729/OrganicProducts/logoo_c1rugw.png" class="img-fluid" alt=""></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <i class=" navbar-toggler bi-list"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav m-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link"  href="/">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-bs-auto-close="outside" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Our Products
+          </a>
+          <ul class="dropdown-menu ">
+            <li class="dropend">
+              <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" href="#c1">Milk Products</a>
+              <ul class="dropdown-menu">
+                <li><a href="/listings/665c648681318962c2eadb45" class="dropdown-item">A2 Milk</a></li>
+                <li><a href="/listings/665c648681318962c2eadb46" class="dropdown-item">A2 Ghee</a></li>
+                <li><a href="/listings/665c648681318962c2eadb47" class="dropdown-item">A2 butter</a></li>
+              </ul>
+            </li>
+            <li class="dropend">
+              <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" href="#c2">Gou Products</a>
+              <ul class="dropdown-menu">
+                <li><a href="/listings/665c648681318962c2eadb48" class="dropdown-item">Goarka</a></li>
+                <li><a href="/listings/665c648681318962c2eadb49" class="dropdown-item">Cow Dungcake</a></li>
+                <li><a href="/listings/665c648681318962c2eadb4a" class="dropdown-item">Vermi Compost</a></li>
+              </ul>
+            </li>
+            <li class="dropend">
+              <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" href="#c3">Cp Oils</a>
+              <ul class="dropdown-menu">
+                <li><a href="/listings/665c648681318962c2eadb4b" class="dropdown-item">Groundnut Oil</a></li>
+                <li><a href="/listings/665c648681318962c2eadb4c" class="dropdown-item">Coconut oil</a></li>
+                <li><a href="/listings/665c648681318962c2eadb4d" class="dropdown-item">Sesame Oil</a></li>
+                <li><a href="/listings/665c648681318962c2eadb4e" class="dropdown-item">Mustard Oil</a></li>
+                <li><a href="/listings/665c648681318962c2eadb4f" class="dropdown-item">Safflower Oil</a></li>
+                <li><a href="/listings/665c648681318962c2eadb50" class="dropdown-item">Sunflower Oil</a></li>
+                <li><a href="/listings/665c648681318962c2eadb51" class="dropdown-item">Castor Oil</a></li>
+              </ul>
+            </li>
+            <li class="dropend">
+              <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" href="#c4">Natural & Organic Products</a>
+              <ul class="dropdown-menu">
+                <li><a href="/listings/665c648681318962c2eadb52" class="dropdown-item">Millet Mix</a></li>
+                <li><a href="/listings/665c648681318962c2eadb53" class="dropdown-item">Jaggery</a></li>
+                <li><a href="/listings/665c648681318962c2eadb54" class="dropdown-item">Rock Salt</a></li>
+              </ul>
+            </li>
+            <li class="dropend">
+              <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" href="#c5">Cosmetics Products</a>
+              <ul class="dropdown-menu">
+                <li><a href="/listings/665c648681318962c2eadb55" class="dropdown-item">Rose Soap</a></li>
+                <li><a href="/listings/665c648681318962c2eadb56" class="dropdown-item">Panchagavya Soap</a></li>
+                <li><a href="/listings/665c648681318962c2eadb57" class="dropdown-item">Gaujal & Chandan Soap</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/aboutus" >
+            About us
+          </a>
+        </li>
+        <%if (currUser&&currUser._id.equals(ownerid)) {%>
+        <li class="nav-item">
+          <a class="nav-link" href="/listing/new">New Listing</a>
+        </li>
+        <%}%>
+        <li class="nav-item">
+          <a class="nav-link" href="#contact">Contact us</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search" style="display:none !important;">
+        <input class="form-control px-2 search" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn1 px-3 me-2" type="submit">Search</button>
+      </form>
+      <form action="/showcart" method="GET">
+        <button style="margin-left: 2px !important;" class="navbarcart"><i class="bi bi-cart4">
+          <span class="position-absolute top-5 start-10 translate-middle badge rounded-pill bg-danger cartbadge">
+            <%= cart.length %>
+            <span class="visually-hidden">Items in cart</span>
+          </span>
+        </i>
+        </button>
+      </form>
+      <div class="dropdown-center" style="margin-right: 10px !important;">
+        <button class="btn  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border: none !important;">
+          <span class="material-symbols-outlined ">
+            account_circle
+            </span>
+        </button>
+        <ul class="dropdown-menu dropdownoflogin">
+          <% if(!currUser){%>
+          <li><a class="dropdown-item" href="/login"><b>Login</b></a></li>
+          <li><a class="dropdown-item" href="/signup"><b>Sign Up</b></a></li>
+          <%}%> <%if(currUser){%>
+          <li><a class="dropdown-item" href="/logout"><b>Log out</b></a></li>
+          <%}%>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+

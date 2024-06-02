@@ -1,0 +1,64 @@
+<%layout('./layouts/boilerplate')%>
+<body>
+  <% let k=0; %>
+  <% let total=0;%>
+    <table class="table">
+        <thead>
+          <tr>
+            <th style="width: 50px;" class="tableheadershowcart">Sl no.</th>
+            <th style="width: 220px;" class="tableheadershowcart">Image</th>
+            <th style="width: 200px;" class="tableheadershowcart">Product</th>
+            <th style="width: 100px;" class="tableheadershowcart">Quantity</th>
+            <th style="width: 100px;" class="tableheadershowcart">Price</th>
+            <th style="width: 100px;" class="tableheadershowcart">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% if(cart.length>0){ 
+                
+                 cart.forEach(item=>{  k++;%>
+                 
+                    <tr>
+                        <td class="tabledatashowcart"><%=k%></td>
+                        <td><img src="<%= item.image_path%>" alt="" height="205px" width="213px" class="showcartimage"></td>
+                        <td class="tabledatashowcart"><%= item.product %></td>
+                        <td class="tabledatashowcart"><%= item.quantity %></td>
+                        <td class="tabledatashowcart"><%= (item.quantity)*(item.price) %></td>
+                        <td><form action="/removeitemfromcart/<%= item.product_id%>" method="GET"><button class="btn btn-dark tabledatashowcartbutton">Delete</button></form></td>
+                      </tr>
+                 
+            <%   total+= (item.quantity)*(item.price);
+               }) %> 
+               <tr>
+                 <td colspan="4" align="right"><b>Total</b></td>
+                 <td>&#8377;&nbsp;<%= total %></td>
+                 <td><form action=""><button id="emailButton" class="btn btn-dark tabledatashowcartbutton ">Confirm Order</button></form></td>
+               </tr>
+              <% }else{ %>
+                <tr>
+                    <td colspan="5" align="center">No item Found in cart</td>
+                </tr>
+            <% } %>
+          
+        </tbody>
+      </table>
+      <% if(k===1||k===2||k===0){%>
+        <div style="height: 400px;"></div>
+        <% } %>
+
+        <script>
+          document.getElementById('emailButton').addEventListener('click', function() {
+            let subject = "Order Confirmation";
+            let body = "Here are the items in your cart:\n\n";
+            <% cart.forEach((item, index) => { %>
+              body += "<%= index + 1 %>. <%= item.product %> - Quantity: <%= item.quantity %>, Price: <%= (item.quantity) * (item.price) %>\n";
+            <% }) %>
+            body += "\nTotal: ₹<%= total %>";
+            body += "\n\nCustomer Details:\n";
+            body += "Name: <%= currUser.username %>\n";
+            body += "Phone: <%= currUser.whatsappnumber %>\n";
+            body += "Address: <%= currUser.address %>";
+            window.open(`mailto:atmanirbharfarm@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
+          });
+        </script>
+</body>

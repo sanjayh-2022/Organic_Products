@@ -1,0 +1,707 @@
+*{
+    font-family: "Noto Serif", serif;
+}
+a{
+    text-decoration: none;
+}
+
+/* Navbar */
+.navbar{
+    background-color: white !important;
+}
+p{
+    font-family: "Noto Serif", serif;
+}
+.nav-item a{
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-right: 15px;
+    transition: all 0.4s;
+    font-family: "Noto Serif", serif;
+}
+.nav-item a:hover{
+    color: rgb(20,219,20);
+}
+.navbar-brand{
+    height: 50px;
+    width: 100px;
+}
+
+.search{
+    height: 45px;
+    outline: none;
+    border: 2px solid rgb(20,219,20);
+    background-color: transparent;
+    border-radius: 20px 0px 0px 20px;
+    border-right: none;
+}
+.search:focus{
+    outline: none !important;
+    box-shadow: none !important;
+    border: 2px solid rgb(20,219,20);
+    border-right: none;
+}
+.btn1{
+    height: 45px;
+    outline: none;
+    border: none;
+    background-color: rgb(20,219,20);
+    border-radius: 0px 20px 20px 0px;
+    transition: all 0.4s;
+    color: white;
+}
+.btn1:hover{
+    color: white;
+    background-color: rgb(15, 153, 15);
+}
+.bi-cart4{
+    font-size: 30px;
+    color: black;
+    cursor: pointer;
+    position: relative;
+    padding-top: 5px !important;
+    transition: all 0.4s;
+}
+.bi-cart4:hover{
+    color: rgb(20,219,20);
+}
+.navbarcart{
+    border: none;
+    background-color:transparent;
+}
+.navbar-toggler{
+    border: none !important;
+    font-size: 30px !important;
+    color: black !important;
+    
+}
+.navbar-toggler:focus{
+    outline: none;
+    box-shadow: none;
+}
+.dropdown-center{
+    margin-left: 10px !important;
+    padding-top: 10px !important;
+}
+.dropdownoflogin{
+    margin-left: -3rem !important; 
+    --bs-dropdown-min-width: 8rem !important;
+}
+@media(max-width: 576px)
+{
+    .dropend .dropdown-toggle::after {
+        vertical-align: 0;
+        rotate: 90deg;
+    }
+    .dropdown-center{
+        margin-left: -3px !important;
+    }
+    .dropdownoflogin{
+        margin-left: 0rem !important; 
+    }
+}
+.cartbadge{
+    font-size: 0.65rem;
+    padding: 0.2em 0.4em;
+    position: absolute !important;
+    top: 15px;
+    right: -10px;
+}
+
+
+
+/*index.js page  */
+
+/* main section */
+.main{
+    background: url('https://res.cloudinary.com/dyinyznt3/image/upload/v1717318004/organic_products/Atma_Nirbar_Banner_1_yyyw2z.png')no-repeat ;
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+}
+@media(min-width: 300px) and (max-width:470px)
+{
+    .main{
+        background: url('https://res.cloudinary.com/dyinyznt3/image/upload/v1717321235/organic_products/phone_image_pl51mi.jpg')no-repeat;
+        background-size: cover;
+        height: 100vh;
+        width: 100%;
+    }
+}
+.main h1{
+    font-size: 5rem;
+    font-family: 'Righteous',cursive;
+}
+
+.nthchild1{
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: -24px !important;
+}
+
+.nthchild2{
+    font-size: 18px;
+    color: grey;
+}
+
+.mbtn1{
+    height: 50px;
+    width: 25%;
+    outline: none;
+    border: none;
+    color: white;
+    background: rgb(20,219,20);
+    border-radius: 50px;
+    transition: all 0.4s;
+
+}
+.mbtn1:hover{
+    background-color: rgb(13,172,13);
+}
+.mbtn2{
+    height: 50px;
+    width: 25%;
+    outline: none;
+    color: rgb(20,219,20);
+    background-color:transparent;
+    border-radius: 50px;
+    border: 1px solid rgb(20,219,20);
+    transition: all 0.4s;
+
+}
+.mbtn2:hover{
+    color:white;
+    background-color: rgb(20,219,20);
+    border: none;
+}
+
+/* welcome section */
+
+.welcome{
+    background: rgb(20,219,20);
+}
+.line2{
+    height: 6px;
+    width: 30%;
+    background-color: white;
+    display: inline-block;
+}
+.welcome h1{
+    font-size: 3rem;
+    font-weight: bold;
+}
+.welcome .card{
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+.welcome i{
+    font-size: 45px;
+    color: rgb(20,219,20);
+}
+.welcome h2{
+    font-weight: lighter;
+    padding: 10px 0px;
+}
+/* product section */
+.product .card{
+    border: 1px solid rgb(236, 236, 236) !important;
+    margin-bottom: 2rem !important;
+}
+.product .card-body{
+    padding: 0px !important;
+}
+.product .card-body img{
+    width: 100%;
+    padding: 4px;
+    border-radius: 10px 10px 15px 15px !important;
+    overflow: hidden;
+    object-fit: cover !important;
+    height: 18rem;
+}
+.card-link{
+    text-decoration: none;
+}
+
+.head1{
+    font-weight: 400;
+    font-size: 1.6rem;
+    margin: 0;
+    margin-left: 0.8rem;
+}
+.per1{
+    color: rgb(148, 145, 145);
+    margin-left: 1rem;
+    font-size: 1.1rem;
+}
+
+
+
+
+
+/* about.ejs page */
+
+.about{
+    background: url('https://res.cloudinary.com/dyinyznt3/image/upload/v1717318004/organic_products/Atma_Nirbar_Banner_1_yyyw2z.png')no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+}
+@media(min-width: 300px) and (max-width:470px)
+{
+    .about{
+        background: url('https://res.cloudinary.com/dyinyznt3/image/upload/v1717321235/organic_products/phone_image_pl51mi.jpg')no-repeat;
+        background-size: cover;
+        height: 100vh;
+        width: 100%;
+    }
+    .aboutatmanirbarfarm{
+        font-size: 23px !important;
+    }
+}
+.line{
+    height: 6px;
+    width: 50%;
+    background: rgb(20,219,20);
+    display: inline-block;
+    border-radius: 10px;
+}
+
+.about h1{
+    font-size: 33px;
+   font-weight: bold;
+}
+
+.about .nthchild1{
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.about .nthchild2{
+    font-size: 18px;
+    color: rgb(56, 53, 53);
+}
+
+/* our products */
+.product h1{
+    font-size: 3rem;
+   font-weight: bold;
+}
+
+.product .nthchild1{
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.product .nthchild2{
+    font-size: 18px;
+    color: grey;
+}
+
+/* edit.ejs page */
+.img-wrapper {
+    max-width: 100%;
+    height: 65vw;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+ .img-wrapper img {
+    width: 100%;
+    height: 15rem;
+    border-radius: 20px 20px 0 0;
+  }
+  .carousel-item{
+    height: 22rem !important;
+    width: 25rem !important;
+  }
+  .card{
+    height: 22rem !important;
+    width:25rem!important;
+    margin: 0 0.5em;
+    box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+    font-size: 0.9em;
+    border-radius: 20px;
+  }
+  .editcart{
+    font-size: 2.3rem;
+    margin-left: 19.3rem;
+    position: relative; 
+    top: -39px;
+    cursor: pointer;
+}
+ .editcart:hover{
+    color: rgb(20, 219, 20);
+ }
+ .carousel-control-next,.carousel-control-prev{
+    top: 45% !important;
+}
+  @media screen and (min-width: 576px) {
+    .carousel-inner {
+      display: flex;
+    }
+    .carousel-item {
+      display: block;
+      margin-right: 0;
+      flex: 0 0 calc(100% / 3);
+      overflow: hidden !important;
+    }
+    .img-wrapper {
+      height: 21vw;
+    }
+  }
+  @media(min-width: 600px)
+{
+    .carousel-inner{
+        padding: 1rem 1rem 0 1rem;
+        margin-left: 6rem;
+        left: 2.5rem;
+        margin-bottom: -3rem;
+        overflow: hidden !important;
+    }
+    .carousel-control-next,.carousel-control-prev{
+        top: 50% !important;
+    }
+    .editcart{
+        
+        position: relative;
+        top: -4.5rem;       
+    }
+    .editbutton{
+        margin-left: 460px !important;
+    }
+    .erroralert{
+        width: 50rem;
+    }
+    .copyrights{
+        margin-top: 20px;
+        margin-left: 28rem;
+    }
+    .copyrights .secondline{
+        margin-top: 8px;
+        margin-left: 10.8rem;
+    }
+}
+@media(min-width: 300px) and (max-width:470px)
+{
+    .carousel-inner {
+        padding: 0.1rem;
+        height: 27rem;
+        overflow: hidden !important;
+        margin-bottom: -4rem;
+      }  
+      .carousel-item{
+        height: 21rem !important;
+        width: 20rem !important;
+      }
+      .card{
+        height: 21rem !important;
+        width:20rem!important;
+      }
+      .card{
+        box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+        font-size: 0.9em;
+        border-radius: 20px;
+      }
+      .card-body{
+        position: relative;
+        margin-top: -20px;
+        margin-left: -9px;
+      }
+      .card-title{
+        font-size: 21px;
+      }
+      .editcart{
+        font-size: 2.3rem;
+        margin-left: 15.8rem;
+        position: relative;
+        top: -4rem;
+        margin-top: -123px;
+        cursor: pointer;      
+    }
+    .editcart:hover{
+        color: rgb(20, 219, 20);
+     }
+    .editbutton{
+        margin-left: 67px !important;
+    }
+    .erroralert{
+        width: 25rem;
+    }
+    .copyrights{
+        margin-top: 20px;
+        margin-left: -6px;
+        font-size: 12px;
+    }
+    .copyrights .secondline{
+        margin-top: 5px;
+        margin-left: 8rem;
+    }
+}
+.carousel-inner {
+    padding: 0.5rem;
+    margin-left: 0.1rem;
+    height: 27rem;
+    overflow: hidden !important;
+  } 
+ .carousel{
+    overflow: hidden;
+ }
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 6vh;
+    height: 6vh;
+    background-color: black;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.5;
+  }
+  .carousel-control-prev:hover,
+  .carousel-control-next:hover {
+    opacity: 0.8;
+  }
+
+
+
+
+
+/* show.ejs */
+*{
+    box-sizing: border-box;
+}
+.columnoftabimage{
+    float:right;
+    width: 13%;
+    padding: 10px !important;
+    border-radius: 1rem;
+}
+.columnoftabimage img{
+    opacity: 0.7;
+    width: 50%;
+    cursor: pointer;
+    transition: all 0.4s;
+    border-radius: 1rem;
+    border: 1px solid black;
+}
+
+.columnoftabimage img:hover{
+    opacity: 1;
+}
+
+.rowoftabimage::after{
+       content: "";
+       display: table;
+       clear: both;
+}
+.containeroftabimage{
+    width: 42%;
+    
+    position: relative;
+    /* display: none; */
+}
+.closebtn{
+    position: absolute;
+    top: 10px;
+    right:15px;
+    color: rgb(255, 255, 255);
+    font-size: 35px;
+    cursor: pointer;
+
+}
+.productsinfo{
+    font-size: 26px;
+    position: relative;
+    margin-left: -55px !important;
+}
+.showaddtocart{
+    position: relative;
+    margin-left: -55px !important;
+}
+.description-text {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    white-space: pre-wrap;
+    font-size: 14px;
+}
+.card-body{
+    position: relative;
+    margin-top: -5px;
+    margin-left: -9px;
+}
+@media (max-width: 576px) {
+    .responsive-heading {
+      font-size: 1.2rem; /* Smaller font size for extra small screens */
+    }
+    .containeroftabimage{
+        width: 82%;
+    }
+    .columnoftabimage{
+        width: 25%;
+    }
+    .rowoftabimage{
+        margin-left: 80px !important;
+    }
+    .productsinfo{
+        font-size: 13px;
+        position: relative;
+        margin-left: -84px !important;
+    }
+    .showaddtocart{
+        position: relative;
+        margin-left: -84px !important;
+    }
+    .responsive-heading{
+        margin-left: 1.8rem !important;
+    }
+    .description-text{
+        font-size: 9px;
+        display: block;
+        width: 300px;
+    }
+  }
+  @media (min-width: 577px) and (max-width: 768px) {
+    .responsive-heading {
+      font-size: 2.5rem; /* Medium font size for small screens */
+    }
+  }
+  @media (min-width: 769px) and (max-width: 1024px){
+    .responsive-heading {
+      font-size: 3rem; /* Larger font size for medium screens */
+    }
+    .rowoftabimage{
+        margin-left: 24.5rem !important;
+    }
+    .productsinfo{
+        font-size: 19px;
+    }
+  }
+    @media (min-width:1025px){
+        .responsive-heading {
+          font-size: 2.5rem; /* Larger font size for medium screens */
+        }
+        .rowoftabimage{
+            margin-left: 35.5rem !important;
+        }
+        .productsinfo{
+            font-size: 26px;
+        }
+  }
+  
+
+/* show cart.ejs page */
+.showcartimage{
+    height: 205px;
+    width: 213px;
+}
+
+@media (max-width: 576px) {
+    .showcartimage{
+        height: 205px;
+        width: 213px;
+    }
+  }
+  @media (min-width: 577px) and (max-width: 768px) {
+    .showcartimage{
+        height: 205px;
+        width: 213px;
+    }
+  }
+  @media (min-width: 769px) and (max-width: 1024px){
+    .showcartimage{
+        height: 205px;
+        width: 213px;
+    } 
+  }
+    @media (min-width:1025px){
+        .showcartimage{
+            height: 205px;
+            width: 213px;
+        }
+  }
+
+  @media(min-width: 300px) and (max-width:470px)
+  {
+    .showcartimage{
+        height: 77px;
+        width: 81px;
+    }
+    .table{
+        font-size: 11px;
+    }
+    .tabledatashowcartbutton{
+        font-size: 11px;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* footer */
+.footer {
+    background: rgb(20, 219, 20);
+    overflow: hidden;
+    color: white;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+}
+
+.footer address{
+    font-size: 2rem;
+    color: white;
+}
+.orgaddress{
+    font-size: 20px;
+    color: white;
+}
+.socialmediacontents{
+    text-align: center;
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+.socialmediacontents h4{
+    font-weight: 700;
+    margin-top: 18px;
+}
+.socialmediacontents .line{
+    height: 6px;
+    width: 60%;
+    background: white;
+    margin-top: 1rem;
+    border-radius: 10px;
+}
+.socialmediaicons{
+    
+    margin: 10px 0 0 25px;
+}
+.socialmediaicons i{
+    font-size: 25px;
+    margin-right: 2rem;
+    cursor: pointer;
+}
+.cartbutton{
+        background-color: transparent;
+        border: none;
+}

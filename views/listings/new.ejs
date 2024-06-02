@@ -1,0 +1,94 @@
+<%layout('./layouts/boilerplate')%>
+<body style="overflow-x: hidden;">
+    <div class="row mt-3">
+        <div class="col-8 offset-1">
+            <br>
+            <h2>Create new Listing</h2>
+            <form method="POST" action="/listing/new/" novalidate class="needs-validation" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="product" class="form-label">Product</label>
+                    <input type="text" name="listing[product]" placeholder="enter the Product name"class="form-control" required>
+                    <div class="valid-feedback">
+                       Product Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Enter a valid Product name
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="listing[description]" id="" cols="30" rows="4" placeholder="enter the description" class="form-control" required></textarea>
+                    <div class="valid-feedback">
+                        Description is great
+                     </div>
+                     <div class="invalid-feedback">
+                         Please enter a short description
+                     </div>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Upload Image</label>
+                    <input type="file" name="listing[image]" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <input  type="text" name="listing[category]"  placeholder="enter the category" class="form-control" required></input>
+                    <div class="valid-feedback">
+                        Category is correct
+                     </div>
+                     <div class="invalid-feedback">
+                         Please enter a valid Category
+                     </div>
+                </div>
+                <div class="mb-3">
+                    <label for="order" class="form-label">Order</label>
+                    <input  type="number" name="listing[order]"  placeholder="enter the order" class="form-control" required></input>
+                    <div class="valid-feedback">
+                        Order is Correct
+                     </div>
+                     <div class="invalid-feedback">
+                         Please enter a valid order
+                     </div>
+                </div>
+                <div class="mb-3">
+                    <label for="suborder" class="form-label">Sub-order</label>
+                    <input type="number"  name="listing[suborder]"  placeholder="enter the sub-order" class="form-control" required></input>
+                    <div class="valid-feedback">
+                        Sub-order is Correct
+                     </div>
+                     <div class="invalid-feedback">
+                         Please enter a valid sub-order
+                     </div>
+                </div>
+                <div class="mb-3">
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <input type="text" name="listing[quantity]"  placeholder="enter the description" class="form-control" required></input>
+                    <div class="valid-feedback">
+                        Quantity is Correct
+                     </div>
+                     <div class="invalid-feedback">
+                         Please enter a valid quantity
+                     </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-md-4">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="text" placeholder="enter the price" name="listing[price]" class="form-control" required> 
+                         <div class="invalid-feedback">
+                            Enter a valid price
+                         </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-md-4">
+                        <label for="discount" class="form-label">Discount</label>
+                        <input type="text" placeholder="enter the discount price" name="listing[discount]" class="form-control" required> 
+                         <div class="invalid-feedback">
+                            Enter a valid discount price
+                         </div>
+                    </div>
+                </div>
+                <button class="btn btn-dark add-btn mt-2 mb-3">Add</button>
+            </form>
+        </div>
+    </div>
+</body>
