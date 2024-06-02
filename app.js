@@ -6,6 +6,7 @@ const app=express();
 const session=require('express-session');
 const flash=require('connect-flash');
 const path=require('path');
+const cors=require('cors');
 const passport=require("passport");
 const localStrat=require('passport-local');
 let User=require("./models/user.js");
@@ -76,6 +77,7 @@ let realOwner=process.env.realowner
     next();
   });
 
+  app.use(cors())
 
 app.use((req, res, next) => {
     if (req.method === 'GET'&& req.path !== '/login') {
