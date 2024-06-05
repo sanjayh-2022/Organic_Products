@@ -117,6 +117,10 @@ app.get('/listings/:id',async(req,res)=>{
    
 });
 
+app.get('/sitemap.xml', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'sitemap.xml'));
+});
+
 
 app.post("/listing/addtocart/:id",isLoggedIn,async(req,res)=>{
        let {id}=req.params;
