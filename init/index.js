@@ -13,7 +13,7 @@ main().then((res)=>{
 
 let add= async()=>{
   await listing.deleteMany({});
-  productlistings.data=productlistings.data.map((obj)=>({...obj,owner:"665c602ee9de83018204cfbe"}));
+  productlistings.data=productlistings.data.map((obj)=>({...obj,owner:""}));
   await listing.insertMany(productlistings.data);
 };
 add();
