@@ -118,7 +118,7 @@ app.get('/listings/:id',async(req,res)=>{
 });
 
 app.get('/sitemap.xml', (req, res) => {
-  res.sendFile(path.join('listings/sitemap.xml'));
+  res.sendFile(path.join(__dirname, 'public', 'sitemap.xml'));
 });
 
 
