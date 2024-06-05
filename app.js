@@ -272,23 +272,7 @@ app.get('/editlisting/:id',isLoggedIn,isOwner,async(req,res)=>{
         origurl=await origurl.replace('/upload','/upload/h_136,w_176');
         res.render("listings/edit.ejs",{cart:req.session.cart,find,origurl});
 });
-app.get('/updateformonetime', async (req, res) => {
-    try {
-      const oldOwnerId = "665c602ee9de83018204cfbe";
-      const newOwnerId = "665f513de91b48b406046ac3";
-  
-      // Update all listings with the old owner ID to the new owner ID
-      await Listing.updateMany(
-        { owner: oldOwnerId },
-        { $set: { owner: newOwnerId } }
-      );
-  
-      res.send(`Listings updated with new owner ID: ${newOwnerId}`);
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Internal Server Error');
-    }
-  });
+ 
 app.put('/editlisting/:id',isLoggedIn,isOwner,valListing,upload.single('listing[image]'),async(req,res,next)=>{
     if(!req.body.listing){
       throw new Expresserror(400,"Send valid data for listing")
