@@ -6,7 +6,8 @@ const passportLocalMongoose=require('passport-local-mongoose');
 const schema=new Schema({
     email:{
         type:String, 
-        required:true
+        required:true,
+        unique:true
     },
     whatsappnumber:{
         type:Number,
@@ -21,6 +22,12 @@ const schema=new Schema({
     address:{
         type:String,
         required:true,
+    },
+    otp:{
+        type:String,
+    },
+    resetPasswordExpires: {
+        type: Date,
     }
 });
 schema.plugin(passportLocalMongoose);

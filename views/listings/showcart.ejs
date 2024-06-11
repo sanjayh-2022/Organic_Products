@@ -47,6 +47,7 @@
         <% } %>
 
         <script>
+          <% if (currUser){ %>
           document.getElementById('emailButton').addEventListener('click', function() {
             let subject = "Order Confirmation";
             let body = "Here are the items in your cart:\n\n";
@@ -60,5 +61,6 @@
             body += "Address: <%= currUser.address %>";
             window.open(`mailto:atmanirbharfarm@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
           });
+          <% }%>
         </script>
 </body>

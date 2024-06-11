@@ -22,7 +22,7 @@ p{
     font-family: "Noto Serif", serif;
 }
 .nav-item a:hover{
-    color: rgb(20,219,20);
+    color: #008E55;
 }
 .navbar-brand{
     height: 50px;
@@ -32,7 +32,7 @@ p{
 .search{
     height: 45px;
     outline: none;
-    border: 2px solid rgb(20,219,20);
+    border: 2px solid #008E55;
     background-color: transparent;
     border-radius: 20px 0px 0px 20px;
     border-right: none;
@@ -40,21 +40,21 @@ p{
 .search:focus{
     outline: none !important;
     box-shadow: none !important;
-    border: 2px solid rgb(20,219,20);
+    border: 2px solid #008E55;
     border-right: none;
 }
 .btn1{
     height: 45px;
     outline: none;
     border: none;
-    background-color: rgb(20,219,20);
+    background-color: #008E55;
     border-radius: 0px 20px 20px 0px;
     transition: all 0.4s;
     color: white;
 }
 .btn1:hover{
     color: white;
-    background-color: rgb(15, 153, 15);
+    background-color: #008E55;
 }
 .bi-cart4{
     font-size: 30px;
@@ -65,7 +65,7 @@ p{
     transition: all 0.4s;
 }
 .bi-cart4:hover{
-    color: rgb(20,219,20);
+    color: #008E55;
 }
 .navbarcart{
     border: none;
@@ -124,7 +124,7 @@ p{
 @media(min-width: 300px) and (max-width:470px)
 {
     .main{
-        background: url('https://res.cloudinary.com/dyinyznt3/image/upload/v1717321235/organic_products/phone_image_pl51mi.jpg')no-repeat;
+        background: url('https://res.cloudinary.com/dyinyznt3/image/upload/v1717685008/organic_products/Atma_Nirbar_Banner_360x600_1_uxpegp.png')no-repeat;
         background-size: cover;
         height: 100vh;
         width: 100%;
@@ -152,35 +152,35 @@ p{
     outline: none;
     border: none;
     color: white;
-    background: rgb(20,219,20);
+    background:#008E55;
     border-radius: 50px;
     transition: all 0.4s;
 
 }
 .mbtn1:hover{
-    background-color: rgb(13,172,13);
+    background-color: #008E55;
 }
 .mbtn2{
     height: 50px;
     width: 25%;
     outline: none;
-    color: rgb(20,219,20);
+    color: #008E55;
     background-color:transparent;
     border-radius: 50px;
-    border: 1px solid rgb(20,219,20);
+    border: 1px solid #008E55;
     transition: all 0.4s;
 
 }
 .mbtn2:hover{
     color:white;
-    background-color: rgb(20,219,20);
+    background-color: #008E55;
     border: none;
 }
 
 /* welcome section */
 
 .welcome{
-    background: rgb(20,219,20);
+    background: #008E55;
 }
 .line2{
     height: 6px;
@@ -192,15 +192,17 @@ p{
     font-size: 3rem;
     font-weight: bold;
 }
-.welcome .card{
+.welcomecard{
     border: none;
     border-radius: 0;
     cursor: pointer;
     margin-bottom: 1rem;
+    height: 16rem !important;
+    width: 25rem !important;
 }
 .welcome i{
     font-size: 45px;
-    color: rgb(20,219,20);
+    color: #008E55;
 }
 .welcome h2{
     font-weight: lighter;
@@ -253,7 +255,7 @@ p{
 @media(min-width: 300px) and (max-width:470px)
 {
     .about{
-        background: url('https://res.cloudinary.com/dyinyznt3/image/upload/v1717321235/organic_products/phone_image_pl51mi.jpg')no-repeat;
+        background: url('https://res.cloudinary.com/dyinyznt3/image/upload/v1717685008/organic_products/Atma_Nirbar_Banner_360x600_1_uxpegp.png')no-repeat;
         background-size: cover;
         height: 100vh;
         width: 100%;
@@ -265,7 +267,7 @@ p{
 .line{
     height: 6px;
     width: 50%;
-    background: rgb(20,219,20);
+    background: #008E55;
     display: inline-block;
     border-radius: 10px;
 }
@@ -334,7 +336,7 @@ p{
     cursor: pointer;
 }
  .editcart:hover{
-    color: rgb(20, 219, 20);
+    color: #008E55;
  }
  .carousel-control-next,.carousel-control-prev{
     top: 45% !important;
@@ -423,7 +425,7 @@ p{
         cursor: pointer;      
     }
     .editcart:hover{
-        color: rgb(20, 219, 20);
+        color: #008E55;
      }
     .editbutton{
         margin-left: 67px !important;
@@ -659,7 +661,7 @@ p{
 
 /* footer */
 .footer {
-    background: rgb(20, 219, 20);
+    background: #008E55;
     overflow: hidden;
     color: white;
     width: 100%;
@@ -705,3 +707,18 @@ p{
         background-color: transparent;
         border: none;
 }
+
+.welcomecard{
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    height: 16rem !important;
+    width: 25rem !important;
+}
+@media(min-width: 300px) and (max-width:470px)
+  {
+    .welcomecard{
+        width: 20rem !important;
+    }
+  }

@@ -7,9 +7,11 @@ const session=require('express-session');
 const flash=require('connect-flash');
 const path=require('path');
 const cors=require('cors');
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 const passport=require("passport");
 const localStrat=require('passport-local');
-let User=require("./models/user.js");
+let User=require('./models/user.js');
 const multer=require('multer');
 const {storage}= require('./cloudConfig.js');
 const upload=multer({storage});
@@ -29,7 +31,7 @@ app.engine('ejs',ejsmate);
 app.use(methodoverride("_method"));
 
 const dbUrl=process.env.dburl;
-
+let otps="";
 //session options
 sessionOptions={
     secret:process.env.SECRET,
@@ -78,6 +80,17 @@ let realOwner=process.env.realowner
   });
 
   app.use(cors())
+
+
+   // Set up email transporter
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.email,
+        pass: process.env.email_pass,
+    }
+});
+
 
 app.use((req, res, next) => {
     if (req.method === 'GET'&& req.path !== '/login') {
@@ -193,13 +206,21 @@ app.get('/signup',async(req,res)=>{
 app.post('/signup',async(req,res)=>{
     try{
         let {username,email,password,whatsappnumber,address}=req.body;
+        const user1 = await User.findOne({ email });
+        if (user1) {
+            req.flash('error','Email is already registered with a account');
+            res.redirect('/signup');
+         }
+        else{
         let  user=new User({username,email,whatsappnumber,address});
         let reguser=await User.register(user,password);
         req.login(reguser,(err)=>{
             if (err) return next(err);
             req.flash('success','Welcome to Atmanirbhar Bharath');
-            res.redirect('/'); 
+            res.redirect('/');
+         
         });
+    }
     }
         
     catch(err){
@@ -212,7 +233,7 @@ app.post('/signup',async(req,res)=>{
 app.post('/login',passport.authenticate('local',{
     failureRedirect:'/login',failureFlash:true
 }),async(req,res)=>{
-    req.flash('success','Welcome back to Atmanirbhar Bharath');
+    req.flash('success','Welcome back to Atmanirbhar Farm');
     res.redirect("/");
 });
 
@@ -226,6 +247,94 @@ app.get('/logout',isLoggedIn,(req,res,next)=>{
     });
 });
 
+
+app.get('/forgotpassword',async(req,res)=>{
+    res.render('users/enteremail.ejs');
+});
+app.post('/forgotpassword',async(req,res)=>{
+     let {email}=req.body;
+     const user = await User.findOne({ email });
+     if (!user) {
+        req.flash('error','Email not registered');
+        res.redirect('/login');
+     }
+     else{
+        // Generate OTP
+        otps = crypto.randomBytes(3).toString('hex'); // You can use a more secure method if needed
+        user.otp = otps;
+        user.resetPasswordExpires = Date.now() + 180000; // 3 minutes to expire
+
+
+        // Send email with OTP
+        const mailOptions = {
+            from: process.env.email,
+            to: user.email,
+            subject: 'Password Reset OTP hurry you have 3 minutes time',
+            text: `Your OTP for password reset is ${otps}`
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                throw new Expresserror(500,"Failed to send Email")
+            }
+        });
+
+        await user.save();
+       let emailo=user.email;
+        res.render('users/enterotp.ejs',{emailo});  
+     }
+     
+});
+app.post('/verifyotp',async(req,res)=>{
+    let {otp,emailfront}=req.body;
+    const email=emailfront;
+    let otpb=" ";
+    for(a of otp){
+        otpb+=a;
+    };
+   let user = await User.findOne({ email });
+   otpb=otpb.replace(/\s/g, '');
+    if(user.otp===otpb)
+        {
+           await User.updateOne(
+                { email: emailfront},    // The filter to find the document by email
+                { $set: {otp: null } } // Set the field value to null
+            );
+            res.render('users/resetpassword',{emailfront});
+        }
+    else
+     {
+        await User.updateOne(
+            { email: emailfront},    // The filter to find the document by email
+            { $set: {otp: null } } // Set the field value to null
+        );
+        req.flash('error','Incorrect OTP');
+        res.redirect('/forgotpassword');
+     }
+});
+
+
+app.post('/resetpassword',async(req,res)=>{
+    let {newpassword,confirmpassword,emailfront}=req.body;
+    const email=emailfront;
+    if(newpassword===confirmpassword)
+        {
+            let user = await User.findOne({ email });
+            user.setPassword(newpassword, async (err) => {
+                if (err) {
+                    return res.status(500).send('Error setting new password');
+                }
+                user.resetPasswordExpires = undefined;
+                await user.save();});
+                req.flash('success','Password reset successfull');
+                res.redirect('/login');
+        }
+    else{
+        req.flash('error','Password does not match');
+        res.render('users/resetpassword',emailfront);
+    }
+});
+
 app.get('/listing/new',isLoggedIn,isOwner,async(req,res)=>{
     if(!req.session.cart)
         {
@@ -233,7 +342,6 @@ app.get('/listing/new',isLoggedIn,isOwner,async(req,res)=>{
         }
    res.render('listings/new.ejs',{cart:req.session.cart});
 });
-
 
 
 app.post('/listing/new',isLoggedIn,isOwner,valListing,upload.single('listing[image]'),async(req,res,next)=>{
