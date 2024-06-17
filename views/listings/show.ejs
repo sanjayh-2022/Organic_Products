@@ -20,7 +20,15 @@
             <div class="column offset-4 mt-4">
               <p class="productsinfo mb-4"><span style="font-weight: 510;">Product</span>: &nbsp;<%= listing.product %></p> 
               <p class="productsinfo"><span style="font-weight: 510;">Quantity</span>:<span style="color: rgb(148, 145, 145);">&nbsp;<%= listing.quantity %></span></p>
-              <p class="productsinfo"><span style="font-weight: 510;">Price</span>:<span style="color: rgb(148, 145, 145);">&nbsp; &#8377;<%= listing.price %></span></p>  
+              <%if(!listing.discount){%>
+              <p class="productsinfo"><span style="font-weight: 510;">Price</span>:<span style="color: rgb(148, 145, 145);">&nbsp; &#8377;<%= listing.price %></span></p> 
+              <%}%> 
+              <%if(listing.discount){%>
+                <p class="productsinfo"><span style="font-weight: 510;">Price</span>:<span style="color: rgb(148, 145, 145);text-decoration: line-through;">&nbsp; &#8377; <%= listing.price%> </span></p> 
+                <%}%>
+              <%if(listing.discount){%>
+              <p class="productsinfo"><span style="font-weight: 510;">Discount Price</span>:<span style="color: rgb(148, 145, 145);">&nbsp; &#8377;<%= listing.price - listing.discount %></span></p> 
+              <%}%> 
               <p class="productsinfo" style="width: 838px;"><span style="font-weight: 510;">Description</span>: &nbsp;<span class="description-text"><%= listing.description %></span></p>
               <form action="/listing/addtocart/<%= listing._id %>" method="POST"><button class="showaddtocart btn btn-dark mt-3 mb-4"><b>Add to cart</b></button></form>
             </div>

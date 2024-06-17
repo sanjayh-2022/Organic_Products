@@ -167,7 +167,7 @@ app.post("/listing/addtocart/:id",isLoggedIn,async(req,res)=>{
             res.redirect(res.locals.redirectUrl);
 });
 
-app.get("/showcart",async(req,res)=>{
+app.get("/showcart",cartMiddleware,async(req,res)=>{
     if(!req.session.cart)
         {
             req.session.cart=[];
@@ -335,7 +335,7 @@ app.post('/resetpassword',async(req,res)=>{
     }
 });
 
-app.get('/listing/new',isLoggedIn,isOwner,async(req,res)=>{
+app.get('/listing/new',cartMiddleware,isLoggedIn,isOwner,async(req,res)=>{
     if(!req.session.cart)
         {
             req.session.cart=[];
@@ -368,7 +368,7 @@ app.post('/listing/new',isLoggedIn,isOwner,valListing,upload.single('listing[ima
      res.redirect("/");
     });
 
-app.get('/editlisting/:id',isLoggedIn,isOwner,async(req,res)=>{
+app.get('/editlisting/:id',cartMiddleware,isLoggedIn,isOwner,async(req,res)=>{
     if(!req.session.cart)
         {
             req.session.cart=[];
@@ -407,6 +407,37 @@ app.delete('/deletelisting/:id',isLoggedIn,isOwner,async(req,res)=>{let {id}=req
 let result=await Listing.findByIdAndDelete(id);
 req.flash('success',"listing deleted");
 res.redirect('/');
+});
+
+app.post('/confirmorder', isLoggedIn, (req, res) => {
+    const orderDetails = req.body;
+    
+    
+    let pret= "Here are the items in your cart:\n\n";
+            orderDetails.items.forEach((item) => { 
+              pret += `${item.sl_no }. ${item.product} - Quantity: ${item.quantity }, Price: ${(item.quantity) * (item.price) }\n`;
+             })
+            pret += `\nTotal: ${orderDetails.total}`;
+            pret += "\n\nCustomer Details:\n";
+            pret += `Name: ${orderDetails.user.name }\n`;
+            pret += `Phone: ${orderDetails.user.phone }\n`;
+            pret += `Address: ${orderDetails.user.address }`;
+            console.log(pret);
+     // Send email with OTP
+     const mailOptions = {
+        from: process.env.email,
+        to: process.env.email,
+        subject: "Order details",
+        text: `The order details are : ${pret}`
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            throw new Expresserror(500,"Failed to send Email")
+        }
+    });
+    req.flash('success',"Order confirmed");
+    res.redirect('/');
 });
 
     app.all('*',(req,res,next)=>{

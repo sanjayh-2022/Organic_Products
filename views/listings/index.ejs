@@ -5,6 +5,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <!-- Linking swiper.css -->
 <link rel="stylesheet" href="/css/style.css">
+<style>
+  .discountprice{
+    margin-top: -15px;
+  }
+
+  @media(min-width: 300px) and (max-width:470px){
+    .discountprice{
+      margin-top: -18px;
+    }
+  }
+  
+</style>
 </head>
 <body>
   <section class="main py-5">
@@ -91,7 +103,7 @@
   <div class="row" style="overflow: hidden !important;margin: 0 !important;padding: 0 !important;">
   <div id="carouselExampleControls<%=indi.order%><%=indi.suborder%>" class="carousel">
       <p class="display-5 mt-4 mb-2" style="margin-left: 2rem !important;" id="c<%= incrementid %>"><b><%=indi.category%></b></p>
-      <div class="carousel-inner">
+      <div class="carousel-inner mb-1">
         <% let count = 0; %>
           <% for(cate of data){%>
                <% if(count===8){ break;%> <%}%>
@@ -104,7 +116,15 @@
                 <div class="card-body">
                   <h5 class="card-title head1" style="font-weight: 600;"><%=cate.product%></h5>
                   <p class="card-text per1" style="margin-bottom: 1px;">Quantity:&nbsp; <%=cate.quantity%></p>
+                  <% if(!cate.discount){ %>
                   <p class="card-text per1">Price:&nbsp;&#8377; <%=cate.price%></p>
+                  <%}%>
+                  <% if(cate.discount){ %>
+                  <p class="card-text per1">Price:<span style="text-decoration: line-through;">&nbsp;&#8377; <%=cate.price%></span></p>
+                  <%}%>
+                  <% if(cate.discount){ %>
+                  <p class="card-text per1 discountprice" >Discount Price:&nbsp;&#8377; <%=cate.price-cate.discount%></p>
+                  <%}%>
                   <form action="/listing/addtocart/<%=cate._id %>" method="POST">
                      <button class="cartbutton"><i class="bi bi-cart-plus editcart"></i></button>
                   </form>

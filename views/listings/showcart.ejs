@@ -1,66 +1,75 @@
 <%layout('./layouts/boilerplate')%>
+<style>
+  .qrimage img {
+    height: 415px;
+    width: 310px;
+  }
+</style>
 <body>
-  <% let k=0; %>
-  <% let total=0;%>
-    <table class="table">
-        <thead>
-          <tr>
-            <th style="width: 50px;" class="tableheadershowcart">Sl no.</th>
-            <th style="width: 220px;" class="tableheadershowcart">Image</th>
-            <th style="width: 200px;" class="tableheadershowcart">Product</th>
-            <th style="width: 100px;" class="tableheadershowcart">Quantity</th>
-            <th style="width: 100px;" class="tableheadershowcart">Price</th>
-            <th style="width: 100px;" class="tableheadershowcart">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-            <% if(cart.length>0){ 
-                
-                 cart.forEach(item=>{  k++;%>
-                 
-                    <tr>
-                        <td class="tabledatashowcart"><%=k%></td>
-                        <td><img src="<%= item.image_path%>" alt="" height="205px" width="213px" class="showcartimage"></td>
-                        <td class="tabledatashowcart"><%= item.product %></td>
-                        <td class="tabledatashowcart"><%= item.quantity %></td>
-                        <td class="tabledatashowcart"><%= (item.quantity)*(item.price) %></td>
-                        <td><form action="/removeitemfromcart/<%= item.product_id%>" method="GET"><button class="btn btn-dark tabledatashowcartbutton">Delete</button></form></td>
-                      </tr>
-                 
-            <%   total+= (item.quantity)*(item.price);
-               }) %> 
-               <tr>
-                 <td colspan="4" align="right"><b>Total</b></td>
-                 <td>&#8377;&nbsp;<%= total %></td>
-                 <td><form action=""><button id="emailButton" class="btn btn-dark tabledatashowcartbutton ">Confirm Order</button></form></td>
-               </tr>
-              <% }else{ %>
-                <tr>
-                    <td colspan="5" align="center">No item Found in cart</td>
-                </tr>
-            <% } %>
-          
-        </tbody>
-      </table>
-      <% if(k===1||k===2||k===0){%>
-        <div style="height: 400px;"></div>
-        <% } %>
-
-        <script>
-          <% if (currUser){ %>
-          document.getElementById('emailButton').addEventListener('click', function() {
-            let subject = "Order Confirmation";
-            let body = "Here are the items in your cart:\n\n";
+  <% let k = 0; %>
+  <% let total = 0; %>
+  <table class="table" id="cartTable">
+    <thead>
+      <tr>
+        <th style="width: 50px;" class="tableheadershowcart">Sl no.</th>
+        <th style="width: 220px;" class="tableheadershowcart">Image</th>
+        <th style="width: 200px;" class="tableheadershowcart">Product</th>
+        <th style="width: 100px;" class="tableheadershowcart">Quantity</th>
+        <th style="width: 100px;" class="tableheadershowcart">Price</th>
+        <th style="width: 100px;" class="tableheadershowcart">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (cart.length > 0) {
+          cart.forEach((item, index) => {
+            k++; %>
+      <tr>
+        <td class="tabledatashowcart"><%= k %></td>
+        <td><img src="<%= item.image_path %>" alt="" height="205px" width="213px" class="showcartimage"></td>
+        <td class="tabledatashowcart"><%= item.product %></td>
+        <td class="tabledatashowcart"><%= item.quantity %></td>
+        <td class="tabledatashowcart">&#8377;&nbsp;<%= item.quantity * item.price %></td>
+        <td>
+          <form action="/removeitemfromcart/<%= item.product_id %>" method="GET">
+            <button class="btn btn-dark tabledatashowcartbutton">Delete</button>
+          </form>
+        </td>
+      </tr>
+      <% total += item.quantity * item.price; %>
+      <% }); %>
+      <tr>
+        <td colspan="4" align="right"><b>Total</b></td>
+        <td>&#8377;&nbsp;<%= total %></td>
+        <td>
+          <form id="confirmOrderForm" action="/confirmorder" method="POST">
             <% cart.forEach((item, index) => { %>
-              body += "<%= index + 1 %>. <%= item.product %> - Quantity: <%= item.quantity %>, Price: <%= (item.quantity) * (item.price) %>\n";
-            <% }) %>
-            body += "\nTotal: ₹<%= total %>";
-            body += "\n\nCustomer Details:\n";
-            body += "Name: <%= currUser.username %>\n";
-            body += "Phone: <%= currUser.whatsappnumber %>\n";
-            body += "Address: <%= currUser.address %>";
-            window.open(`mailto:atmanirbharfarm@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
-          });
-          <% }%>
-        </script>
+            <input type="hidden" name="items[<%= index %>][sl_no]" value="<%= index + 1 %>">
+            <input type="hidden" name="items[<%= index %>][image]" value="<%= item.image_path %>">
+            <input type="hidden" name="items[<%= index %>][product]" value="<%= item.product %>">
+            <input type="hidden" name="items[<%= index %>][quantity]" value="<%= item.quantity %>">
+            <input type="hidden" name="items[<%= index %>][price]" value="<%= item.quantity * item.price %>">
+            <% }); %>
+            <input type="hidden" name="total" value="<%= total %>">
+            <input type="hidden" name="user[name]" value="<%= currUser.username %>">
+            <input type="hidden" name="user[phone]" value="<%= currUser.whatsappnumber %>">
+            <input type="hidden" name="user[address]" value="<%= currUser.address %>">
+            <button type="submit" class="btn btn-dark tabledatashowcartbutton">Confirm Order</button>
+          </form>
+        </td>
+      </tr>
+      <% } else { %>
+      <tr>
+        <td colspan="5" align="center">No item Found in cart</td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+  <% if (cart.length > 0) { %>
+  <div class="qrimage" style="display:flex ;justify-content:center;align-items: center;">
+    <img src="https://res.cloudinary.com/dyinyznt3/image/upload/v1718622280/organic_products/qr_xj7adb.jpg" alt="">
+  </div>
+  <% } %>
+  <% if (k === 1 || k === 2 || k === 0) { %>
+  <div style="height: 100px;"></div>
+  <% } %>
 </body>
