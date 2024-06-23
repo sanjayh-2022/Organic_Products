@@ -53,7 +53,7 @@ module.exports.valListing=(req,res,next)=>{
 
   module.exports.navbarlisting = async (req, res, next) => {
     try {
-      const navlistings = await Listing.find({});
+      const navlistings = await Listing.find().sort({ order: 1,suborder:1 }).exec()
       res.locals.navlistings = navlistings;
       next();
     } catch (err) {
