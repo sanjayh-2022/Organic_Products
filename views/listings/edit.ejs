@@ -27,12 +27,28 @@
               </div>
               <div class="mb-3">
                 Your original image <br>
-                <img src="<%=origurl%>" alt="">
+                <img src="<%=origurl1%>" alt="not">
+            </div>
+            <div class="mb-3">
+                Your original image <br>
+                <img src="<%=origurl2%>" alt="not">
+            </div>
+            <div class="mb-3">
+                Your original image <br>
+                <img src="<%=origurl3%>" alt="not">
             </div>
               <div class="mb-3">
-                  <label for="image" class="form-label">Upload Image</label>
-                  <input type="file" name="listing[image]" value="<%=find.image %>" class="form-control">
+                  <label for="image1" class="form-label">Upload Image 1</label>
+                  <input type="file" name="listing[image1]" value="<%=find.image1 %>" class="form-control">
               </div>
+              <div class="mb-3">
+                <label for="image2" class="form-label">Upload Image 2</label>
+                <input type="file" name="listing[image2]" value="<%=find.image2 %>" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="image3" class="form-label">Upload Image 3</label>
+                <input type="file" name="listing[image3]" value="<%=find.image3 %>" class="form-control">
+            </div>
               <div class="mb-3">
                   <label for="category" class="form-label">Category</label>
                   <input  type="text" name="listing[category]" value="<%=find.category%>" placeholder="enter the category" class="form-control" required></input>

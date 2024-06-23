@@ -1,5 +1,6 @@
 const Expresserror=require('./Expresserror.js');
 const {Listingschema}=require('./schema.js');
+const Listing=require('./models/listing.js');
 
 // middleware/cartMiddleware.js
 module.exports.cartMiddleware = (req, res, next) => {
@@ -48,3 +49,15 @@ module.exports.valListing=(req,res,next)=>{
     }
     else next();
   };
+
+
+  module.exports.navbarlisting = async (req, res, next) => {
+    try {
+      const navlistings = await Listing.find({});
+      res.locals.navlistings = navlistings;
+      next();
+    } catch (err) {
+      next(err);
+    }
+  };
+  

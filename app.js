@@ -13,12 +13,12 @@ const passport=require("passport");
 const localStrat=require('passport-local');
 let User=require('./models/user.js');
 const multer=require('multer');
-const {storage}= require('./cloudConfig.js');
-const upload=multer({storage});
+const { storage,cloudinary }= require('./cloudConfig.js');
+const upload=multer({ storage });
 const mongoose=require('mongoose');
 const port=3000;
 const ejsmate=require("ejs-mate");
-const {isLoggedIn,valListing,saveRedirectUrl,cartMiddleware,isOwner}=require('./middleware.js');
+const {isLoggedIn,valListing,saveRedirectUrl,cartMiddleware,isOwner,navbarlisting}=require('./middleware.js');
 const Expresserror=require('./Expresserror.js');
 const methodoverride=require('method-override');
 const Listing=require('./models/listing.js');
@@ -104,7 +104,7 @@ app.use(cartMiddleware);
 
 
 
-app.get('/',async (req,res)=>{
+app.get('/',navbarlisting,async (req,res)=>{
     const data= await Listing.find().sort({ order: 1,suborder:1 }).exec();
     const categories = data.map(item => item.category);
     if(!req.session.cart)
@@ -116,11 +116,11 @@ app.get('/',async (req,res)=>{
 });
 
 
-app.get('/aboutus',async (req,res)=>{
+app.get('/aboutus',navbarlisting,async (req,res)=>{
     res.render('listings/aboutus.ejs');
 });
 
-app.get('/listings/:id',async(req,res)=>{
+app.get('/listings/:id',navbarlisting,async(req,res)=>{
     const {id}=req.params;
     const  listing =await Listing.findById(id);
     if (!req.session.cart) {
@@ -130,7 +130,7 @@ app.get('/listings/:id',async(req,res)=>{
    
 });
 
-app.get('/sitemap.xml', (req, res) => {
+app.get('/sitemap.xml', navbarlisting,(req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'sitemap.xml'));
 });
 
@@ -167,7 +167,7 @@ app.post("/listing/addtocart/:id",isLoggedIn,async(req,res)=>{
             res.redirect(res.locals.redirectUrl);
 });
 
-app.get("/showcart",cartMiddleware,async(req,res)=>{
+app.get("/showcart",navbarlisting,cartMiddleware,async(req,res)=>{
     if(!req.session.cart)
         {
             req.session.cart=[];
@@ -176,7 +176,7 @@ app.get("/showcart",cartMiddleware,async(req,res)=>{
 });
 
 
-app.get('/removeitemfromcart/:id',isLoggedIn,async(req,res)=>{
+app.get('/removeitemfromcart/:id',navbarlisting,isLoggedIn,async(req,res)=>{
     let {id}=req.params;
     for(let i=0;i<req.session.cart.length;i++)
         {
@@ -188,14 +188,14 @@ app.get('/removeitemfromcart/:id',isLoggedIn,async(req,res)=>{
     res.redirect('/showcart');
 });
 
-app.get('/login',async(req,res)=>{
+app.get('/login',navbarlisting,async(req,res)=>{
     if(!req.session.cart)
         {
             req.session.cart=[];
         }
     res.render('users/login.ejs',{cart:req.session.cart});
 });
-app.get('/signup',async(req,res)=>{
+app.get('/signup',navbarlisting,async(req,res)=>{
     if(!req.session.cart)
         {
             req.session.cart=[];
@@ -237,7 +237,7 @@ app.post('/login',passport.authenticate('local',{
     res.redirect("/");
 });
 
-app.get('/logout',isLoggedIn,(req,res,next)=>{
+app.get('/logout',navbarlisting,isLoggedIn,(req,res,next)=>{
     req.logout((err)=>{
         if(err){
             return  next(err);
@@ -248,7 +248,7 @@ app.get('/logout',isLoggedIn,(req,res,next)=>{
 });
 
 
-app.get('/forgotpassword',async(req,res)=>{
+app.get('/forgotpassword',navbarlisting,async(req,res)=>{
     res.render('users/enteremail.ejs');
 });
 app.post('/forgotpassword',async(req,res)=>{
@@ -335,7 +335,7 @@ app.post('/resetpassword',async(req,res)=>{
     }
 });
 
-app.get('/listing/new',cartMiddleware,isLoggedIn,isOwner,async(req,res)=>{
+app.get('/listing/new',navbarlisting,cartMiddleware,isLoggedIn,isOwner,async(req,res)=>{
     if(!req.session.cart)
         {
             req.session.cart=[];
@@ -344,65 +344,130 @@ app.get('/listing/new',cartMiddleware,isLoggedIn,isOwner,async(req,res)=>{
 });
 
 
-app.post('/listing/new',isLoggedIn,isOwner,valListing,upload.single('listing[image]'),async(req,res,next)=>{
-     
-    const category = req.body.listing.category;
-
-    // Find all listings in the specified category
-    const listingsInCategory = await Listing.find({ category });
-
-    // Increment the suborder for each listing in the category
-    for (let listing of listingsInCategory) {
-      listing.suborder = (listing.suborder) + 1;
-      await listing.save();
-    } 
-
-
-     let l1=new Listing(req.body.listing);
-     l1.image.path=req.file.path;
-     l1.image.filename=req.file.filename;
-     l1.owner=res.locals.realowner;
-     await l1.save();
- 
-     req.flash('success',"Your listing has been created!");
-     res.redirect("/");
-    });
-
-app.get('/editlisting/:id',cartMiddleware,isLoggedIn,isOwner,async(req,res)=>{
-    if(!req.session.cart)
-        {
-            req.session.cart=[];
-        }
-        let {id}=req.params;
-        let find=await Listing.findById(id);
-        if(!find){
-         req.flash('error',"The listing you are looking for doesn't exist");
-         res.redirect('/');
-         return;
-        }
-        let origurl=await find.image.path;
-        origurl=await origurl.replace('/upload','/upload/h_136,w_176');
-        res.render("listings/edit.ejs",{cart:req.session.cart,find,origurl});
-});
- 
-app.put('/editlisting/:id',isLoggedIn,isOwner,valListing,upload.single('listing[image]'),async(req,res,next)=>{
-    if(!req.body.listing){
-      throw new Expresserror(400,"Send valid data for listing")
-    };
-    let {id}=req.params;
-    let ulist= await Listing.findByIdAndUpdate(id,{...req.body.listing},{runValidators:true});
-
-    if(req.file)
-    {
-        let path=req.file.path;
-        let filename=req.file.filename;
-        ulist.image={path,filename};
-        await ulist.save();
+app.post('/listing/new', isLoggedIn, isOwner, valListing, upload.fields([
+    { name: 'listing[image1]', maxCount: 1 },
+    { name: 'listing[image2]', maxCount: 1 },
+    { name: 'listing[image3]', maxCount: 1 }
+  ]), async (req, res, next) => {
+    try {
+      const category = req.body.listing.category;
+      console.log(category);
+      // Find all listings in the specified category and increment their suborder
+      await Listing.updateMany({ category }, { $inc: { suborder: 1 } });
+  
+      let l1 = new Listing(req.body.listing);
+      
+      if (req.files['listing[image1]']) {
+        l1.image1 = {
+          path: req.files['listing[image1]'][0].path,
+          filename: req.files['listing[image1]'][0].filename
+        };
+      }
+  
+      if (req.files['listing[image2]']) {
+        l1.image2 = {
+          path: req.files['listing[image2]'][0].path,
+          filename: req.files['listing[image2]'][0].filename
+        };
+      }
+  
+      if (req.files['listing[image3]']) {
+        l1.image3 = {
+          path: req.files['listing[image3]'][0].path,
+          filename: req.files['listing[image3]'][0].filename
+        };
+      }
+  
+      l1.owner = res.locals.realowner;
+      await l1.save();
+  
+      req.flash('success', "Your listing has been created!");
+      res.redirect("/");
+    } catch (error) {
+      console.error('Error creating listing:', error);
+      req.flash('error', 'There was an error creating your listing.');
+      res.redirect('/');
     }
-   
-    req.flash('success',"listing updated!");
-    res.redirect(`/listings/${id}`);
   });
+  
+  
+  app.get('/editlisting/:id', navbarlisting,cartMiddleware, isLoggedIn, isOwner, async (req, res) => {
+    if (!req.session.cart) {
+        req.session.cart = [];
+    }
+
+    let { id } = req.params;
+    try {
+        let find = await Listing.findById(id);
+
+        if (!find) {
+            req.flash('error', "The listing you are looking for doesn't exist");
+            return res.redirect('/');
+        }
+
+        let origurl1 = find.image1 && find.image1.path ? find.image1.path.replace('/upload', '/upload/h_136,w_176') : '';
+        let origurl2 = find.image2 && find.image2.path ? find.image2.path.replace('/upload', '/upload/h_136,w_176') : '';
+        let origurl3 = find.image3 && find.image3.path ? find.image3.path.replace('/upload', '/upload/h_136,w_176') : '';
+
+        res.render("listings/edit.ejs", { cart: req.session.cart, find, origurl1, origurl2, origurl3 });
+    } catch (error) {
+        console.error('Error fetching or processing listing:', error);
+        req.flash('error', 'There was an error fetching or processing the listing.');
+        res.redirect('/');
+    }
+});
+
+ 
+app.put('/editlisting/:id', isLoggedIn, isOwner, valListing, upload.fields([
+    { name: 'listing[image1]', maxCount: 1 },
+    { name: 'listing[image2]', maxCount: 1 },
+    { name: 'listing[image3]', maxCount: 1 }
+]), async (req, res, next) => {
+    try {
+        if (!req.body.listing) {
+            throw new Expresserror(400, "Send valid data for listing");
+        }
+
+        let { id } = req.params;
+        let updatedListing = await Listing.findByIdAndUpdate(id, { ...req.body.listing }, { new: true, runValidators: true });
+
+        if (!updatedListing) {
+            req.flash('error', "Listing not found");
+            return res.redirect('/');
+        }
+
+        if (req.files['listing[image1]']) {
+            updatedListing.image1 = {
+                path: req.files['listing[image1]'][0].path,
+                filename: req.files['listing[image1]'][0].filename
+            };
+        }
+
+        if (req.files['listing[image2]']) {
+            updatedListing.image2 = {
+                path: req.files['listing[image2]'][0].path,
+                filename: req.files['listing[image2]'][0].filename
+            };
+        }
+
+        if (req.files['listing[image3]']) {
+            updatedListing.image3 = {
+                path: req.files['listing[image3]'][0].path,
+                filename: req.files['listing[image3]'][0].filename
+            };
+        }
+
+        await updatedListing.save(); // Save the updated listing
+
+        req.flash('success', "Listing updated!");
+        res.redirect(`/listings/${id}`);
+    } catch (error) {
+        console.error('Error updating listing:', error);
+        req.flash('error', 'Error updating listing');
+        res.redirect('/');
+    }
+});
+
 app.delete('/deletelisting/:id',isLoggedIn,isOwner,async(req,res)=>{let {id}=req.params;
 let result=await Listing.findByIdAndDelete(id);
 req.flash('success',"listing deleted");
@@ -440,7 +505,7 @@ app.post('/confirmorder', isLoggedIn, (req, res) => {
     res.redirect('/');
 });
 
-    app.all('*',(req,res,next)=>{
+    app.all('*',navbarlisting,(req,res,next)=>{
         next(new Expresserror(404,"Page not found!"));
       });
       

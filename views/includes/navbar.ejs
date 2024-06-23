@@ -13,55 +13,36 @@
           <a class="nav-link dropdown-toggle" data-bs-auto-close="outside" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Our Products
           </a>
-          <ul class="dropdown-menu ">
-            <li class="dropend">
-              <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" href="#c1">Milk Products</a>
-              <ul class="dropdown-menu">
-                <li><a href="/listings/665c648681318962c2eadb45" class="dropdown-item">A2 Milk</a></li>
-                <li><a href="/listings/665c648681318962c2eadb46" class="dropdown-item">A2 Ghee</a></li>
-                <li><a href="/listings/665c648681318962c2eadb47" class="dropdown-item">A2 butter</a></li>
+          <ul class="dropdown-menu">
+            <% 
+              let currentCategory = null; 
+              let firstCategory = true;
+            %>
+            
+            <% navlistings.forEach(list => { %>
+              <% if (list.category !== currentCategory) { %>
+                <% if (!firstCategory) { %>
+                  </ul>
+                </li>
+                <% } %>
+                
+                <% currentCategory = list.category; %>
+                <% firstCategory = false; %>
+          
+                <li class="dropend">
+                  <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" href="#c1"><%= list.category %></a>
+                  <ul class="dropdown-menu">
+              <% } %>
+              
+              <li><a href="/listings/<%= list._id %>" class="dropdown-item"><%= list.product %></a></li>
+            <% }); %>
+          
+            <% if (!firstCategory) { %>
               </ul>
             </li>
-            <li class="dropend">
-              <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" href="#c2">Gou Products</a>
-              <ul class="dropdown-menu">
-                <li><a href="/listings/665c648681318962c2eadb48" class="dropdown-item">Goarka</a></li>
-                <li><a href="/listings/665c648681318962c2eadb49" class="dropdown-item">Cow Dungcake</a></li>
-                <li><a href="/listings/665c648681318962c2eadb4a" class="dropdown-item">Vermi Compost</a></li>
-              </ul>
-            </li>
-            <li class="dropend">
-              <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" href="#c3">Cp Oils</a>
-              <ul class="dropdown-menu">
-                <li><a href="/listings/665c648681318962c2eadb4b" class="dropdown-item">Groundnut Oil</a></li>
-                <li><a href="/listings/665c648681318962c2eadb4c" class="dropdown-item">Coconut oil</a></li>
-                <li><a href="/listings/665c648681318962c2eadb4d" class="dropdown-item">Sesame Oil</a></li>
-                <li><a href="/listings/665c648681318962c2eadb4e" class="dropdown-item">Mustard Oil</a></li>
-                <li><a href="/listings/665c648681318962c2eadb4f" class="dropdown-item">Safflower Oil</a></li>
-                <li><a href="/listings/665c648681318962c2eadb50" class="dropdown-item">Sunflower Oil</a></li>
-                <li><a href="/listings/665c648681318962c2eadb51" class="dropdown-item">Castor Oil</a></li>
-              </ul>
-            </li>
-            <li class="dropend">
-              <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" href="#c4">Natural & Organic Products</a>
-              <ul class="dropdown-menu">
-                <li><a href="/listings/665c648681318962c2eadb52" class="dropdown-item">Millet Mix(500 gm)</a></li>
-                <li><a href="/listings/665c648681318962c2eadb53" class="dropdown-item">Millet Mix(1 kg)</a></li>
-                <li><a href="/listings/665c648681318962c2eadb54" class="dropdown-item">Jaggery</a></li>
-                <li><a href="/listings/665c648681318962c2eadb55" class="dropdown-item">Rock Salt</a></li>
-              </ul>
-            </li>
-            <li class="dropend">
-              <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" href="#c5">Cosmetics Products</a>
-              <ul class="dropdown-menu">
-                <li><a href="/listings/665c648681318962c2eadb56" class="dropdown-item">Rose Soap</a></li>
-                <li><a href="/listings/665c648681318962c2eadb57" class="dropdown-item">Panchagavya Soap</a></li>
-                <li><a href="/listings/665c648681318962c2eadb58" class="dropdown-item">Gaujal & Chandan Soap</a></li>
-                <li><a href="/listings/665c648681318962c2eadb59" class="dropdown-item">Lime Soap</a></li>
-                <li><a href="/listings/665c648681318962c2eadb5a" class="dropdown-item">Siddantha Toothpaste</a></li>
-              </ul>
-            </li>
+            <% } %>
           </ul>
+          
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/aboutus" >

@@ -3,7 +3,15 @@ const review=require('./reviews.js');
 const Schema=mongoose.Schema;
 const listschema = new Schema({
     product: { type: String, required: true },
-    image: {    
+    image1: {    
+        path:String,
+        filename:String,
+    },
+    image2: {    
+        path:String,
+        filename:String,
+    },
+    image3: {    
         path:String,
         filename:String,
     },
